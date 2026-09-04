@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MedScan+ — Smart Medicine Safety & Recovery Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,400&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E14;
+    --bg-2:#0E1420;
+    --ink:#F2F4F7;
+    --ink-dim:#8A93A6;
+    --ink-faint:#4A5266;
+    --teal:#00E5C8;
+    --teal-deep:#0FB59B;
+    --amber:#FFB627;
+    --red:#FF4757;
+    --line:rgba(255,255,255,.08);
+    --card:#11161F;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Manrope',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .deck{display:flex;flex-direction:column}
+  .slide{
+    min-height:100vh;
+    width:100%;
+    padding:60px 72px;
+    position:relative;
+    scroll-snap-align:start;
+    display:flex;
+    flex-direction:column;
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .slide-num{
+    position:absolute;
+    top:28px;right:36px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--ink-faint);
+    letter-spacing:2px;
+  }
+  .slide-tag{
+    position:absolute;
+    top:28px;left:36px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--teal);
+    letter-spacing:2px;
+    text-transform:uppercase;
+  }
+  .slide-tag::before{
+    content:'';
+    display:inline-block;
+    width:6px;height:6px;
+    background:var(--teal);
+    border-radius:50%;
+    margin-right:8px;
+    vertical-align:middle;
+    box-shadow:0 0 12px var(--teal);
+  }
+
+  /* ========= SLIDE 1 : COVER ========= */
+  .cover{
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 20%,rgba(0,229,200,.12),transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 80%,rgba(255,71,87,.08),transparent 60%),
+      var(--bg);
+    justify-content:space-between;
+  }
+  .cover-top{display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-dim);letter-spacing:2px}
+  .logo-mark{
+    display:flex;align-items:center;gap:10px;
+    font-family:'Fraunces',serif;font-weight:800;
+    color:var(--ink);font-size:18px;
+  }
+  .logo-mark .dot{
+    width:14px;height:14px;border-radius:4px;
+    background:linear-gradient(135deg,var(--teal),var(--teal-deep));
+    box-shadow:0 0 20px rgba(0,229,200,.6);
+    position:relative;
+  }
+  .logo-mark .dot::after{
+    content:'+';position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    color:#0A0E14;font-weight:900;font-size:11px;
+  }
+  .cover-center{display:flex;flex-direction:column;gap:18px;max-width:1200px}
+  .kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;letter-spacing:4px;
+    color:var(--teal);text-transform:uppercase;
+    display:flex;align-items:center;gap:14px;
+  }
+  .kicker::before{content:'';width:40px;height:1px;background:var(--teal)}
+  .cover h1{
+    font-family:'Fraunces',serif;
+    font-weight:300;
+    font-size:clamp(56px,9vw,140px);
+    line-height:.95;
+    letter-spacing:-.03em;
+    color:var(--ink);
+  }
+  .cover h1 em{
+    font-style:italic;
+    font-weight:400;
+    color:var(--teal);
+    font-variation-settings:"SOFT" 100;
+  }
+  .cover h1 .plus{
+    font-family:'JetBrains Mono',monospace;
+    font-style:normal;
+    font-weight:500;
+    color:var(--amber);
+  }
+  .cover-sub{
+    font-size:18px;color:var(--ink-dim);
+    max-width:620px;line-height:1.6;
+    margin-top:18px;
+  }
+  .cover-bottom{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:0;
+    border-top:1px solid var(--line);
+    padding-top:24px;
+  }
+  .meta-block{padding-right:24px;border-right:1px solid var(--line)}
+  .meta-block:last-child{border-right:none}
+  .meta-block .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;color:var(--ink-faint);
+    letter-spacing:2px;text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .meta-block .val{font-size:14px;color:var(--ink);font-weight:500}
+
+  /* ========= SLIDE 2 : PROBLEM ========= */
+  .problem{background:var(--bg)}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px}
+  .section-head h2{
+    font-family:'Fraunces',serif;
+    font-weight:300;
+    font-size:clamp(40px,5.5vw,76px);
+    line-height:1;letter-spacing:-.02em;
+  }
+  .section-head h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .section-head .right-note{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;color:var(--ink-dim);
+    text-align:right;letter-spacing:1px;
+    max-width:280px;line-height:1.6;
+  }
+  .crisis-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    flex:1;
+  }
+  .crisis-card{
+    background:var(--bg);
+    padding:40px 32px;
+    display:flex;flex-direction:column;
+    position:relative;
+    overflow:hidden;
+  }
+  .crisis-card .bg-num{
+    position:absolute;
+    bottom:-40px;right:-20px;
+    font-family:'Fraunces',serif;
+    font-weight:900;
+    font-size:280px;
+    color:rgba(255,255,255,.025);
+    line-height:.8;
+  }
+  .crisis-card .num-prefix{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;color:var(--ink-faint);
+    letter-spacing:2px;margin-bottom:16px;
+  }
+  .crisis-card h3{
+    font-family:'Fraunces',serif;
+    font-weight:400;font-size:32px;
+    line-height:1.1;margin-bottom:14px;
+    position:relative;z-index:1;
+  }
+  .crisis-card .accent-bar{
+    width:32px;height:2px;
+    background:var(--teal);margin-bottom:18px;
+  }
+  .crisis-card:nth-child(2) .accent-bar{background:var(--amber)}
+  .crisis-card:nth-child(3) .accent-bar{background:var(--red)}
+  .crisis-card p{
+    color:var(--ink-dim);
+    font-size:15px;line-height:1.7;
+    position:relative;z-index:1;
+  }
+
+  /* ========= SLIDE 3 : WHY IT MATTERS ========= */
+  .why{background:var(--bg-2)}
+  .stats-row{
+    display:grid;
+    grid-template-columns:repeat(3,1fr); 
+    gap:1px;
+    background:var(--line);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-bottom:40px;
+  }
+  .stat-cell{
+    background:var(--bg-2);
+    padding:36px 28px;
+    display:flex;flex-direction:column;
+    gap:10px;
+  }
+  .stat-cell .figure{
+    font-family:'Fraunces',serif;
+    font-size:84px;
+    font-weight:300;
+    line-height:.9;
+    letter-spacing:-.04em;
+  }
+  .stat-cell .figure .unit{
+    font-size:32px;color:var(--teal);
+    font-style:italic;font-weight:400;
+  }
+  .stat-cell .figure.amber{color:var(--amber)}
+  .stat-cell .figure.red{color:var(--red)}
+  .stat-cell .figure.teal{color:var(--teal)}
+  .stat-cell .figure.white{color:var(--ink)}
+  .stat-cell .stat-desc{
+    font-size:13px;color:var(--ink);
+    line-height:1.5;font-weight:500;
+  }
+  .stat-cell .source{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9.5px;
+    color:var(--ink-faint);
+    letter-spacing:.5px;
+    margin-top:8px;
+    padding-top:8px;
+    border-top:1px solid var(--line);
+  }
+  .narrative{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:64px;
+    align-items:start;
+  }
+  .narrative .lead{
+    font-family:'Fraunces',serif;
+    font-size:28px;font-weight:300;
+    line-height:1.3;color:var(--ink);
+    letter-spacing:-.01em;
+  }
+  .narrative .lead em{color:var(--teal);font-style:italic}
+
+  /* ========= SLIDE 4 : SOLUTION ========= */
+  .solution{background:var(--bg)}
+  .modules{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;flex:1;
+  }
+  .module-card{
+    background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0));
+    border:1px solid var(--line);
+    padding:28px 24px;
+    display:flex;flex-direction:column;
+    position:relative;
+    transition:all .4s ease;
+  }
+  .module-card:hover{border-color:var(--teal);transform:translateY(-4px)}
+  .module-icon{
+    width:48px;height:48px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(0,229,200,.08);
+    border:1px solid rgba(0,229,200,.2);
+    border-radius:12px;
+    margin-bottom:24px;
+  }
+  .module-card:nth-child(2) .module-icon{background:rgba(255,182,39,.08);border-color:rgba(255,182,39,.2)}
+  .module-card:nth-child(3) .module-icon{background:rgba(255,71,87,.08);border-color:rgba(255,71,87,.2)}
+  .module-card:nth-child(4) .module-icon{background:rgba(0,229,200,.08);border-color:rgba(0,229,200,.2)}
+  .module-card .mod-num{
+    position:absolute;
+    top:20px;right:20px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;color:var(--ink-faint);
+    letter-spacing:1px;
+  }
+  .module-card h3{
+    font-family:'Fraunces',serif;
+    font-size:24px;font-weight:500;
+    line-height:1.1;margin-bottom:8px;
+  }
+  .module-card .mod-sub{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;color:var(--teal);
+    letter-spacing:2px;text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .module-card:nth-child(2) .mod-sub{color:var(--amber)}
+  .module-card:nth-child(3) .mod-sub{color:var(--red)}
+  .module-card p{font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:20px}
+  .module-card .feat-list{
+    list-style:none;
+    margin-top:auto;
+    padding-top:16px;
+    border-top:1px dashed var(--line);
+  }
+  .module-card .feat-list li{
+    font-size:12px;color:var(--ink);
+    padding:6px 0;
+    display:flex;align-items:center;gap:8px;
+  }
+  .module-card .feat-list li::before{
+    content:'→';color:var(--teal);font-size:11px;
+  }
+
+  /* ========= SLIDE 5 & 6 : HOW IT WORKS ========= */
+  .how{background:var(--bg-2)}
+  .how-grid{
+    display:grid;
+    grid-template-columns:1fr 380px 1fr;
+    gap:48px;
+    flex:1;
+    align-items:center;
+  }
+  .step-list{display:flex;flex-direction:column;gap:18px}
+  .step{
+    display:flex;gap:18px;align-items:flex-start;
+    padding:18px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .step:last-child{border-bottom:none}
+  .step-num{
+    font-family:'Fraunces',serif;
+    font-size:36px;font-weight:300;
+    color:var(--teal);line-height:1;
+    min-width:48px;
+  }
+  .step:nth-child(2) .step-num{color:var(--amber)}
+  .step:nth-child(3) .step-num{color:var(--red)}
+  .step:nth-child(4) .step-num{color:var(--teal)}
+  .step-body h4{
+    font-family:'Fraunces',serif;
+    font-size:20px;font-weight:500;
+    margin-bottom:6px;
+  }
+  .step-body p{
+    font-size:13px;color:var(--ink-dim);
+    line-height:1.6;
+  }
+  .step-body .tech-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;color:var(--teal);
+    background:rgba(0,229,200,.08);
+    padding:2px 8px;border-radius:3px;
+    letter-spacing:1px;margin-top:8px;
+    border:1px solid rgba(0,229,200,.2);
+  }
+
+  /* PHONE MOCKUP */
+  .phone-wrap{
+    display:flex;flex-direction:column;
+    align-items:center;gap:20px;
+  }
+  .phone{
+    width:300px;height:620px;
+    background:#050810;
+    border-radius:42px;
+    border:1px solid rgba(255,255,255,.12);
+    padding:10px;
+    box-shadow:
+      0 0 0 1px rgba(0,229,200,.05),
+      0 30px 80px rgba(0,0,0,.6),
+      inset 0 0 0 1px rgba(255,255,255,.03);
+    position:relative;
+  }
+  .phone::before{
+    content:'';position:absolute;
+    top:18px;left:50%;transform:translateX(-50%);
+    width:90px;height:22px;background:#050810;
+    border-radius:14px;z-index:10;
+  }
+  .phone-screen{
+    width:100%;height:100%;
+    background:linear-gradient(180deg,#0A1018,#0E1622);
+    border-radius:32px;
+    overflow:hidden;
+    position:relative;
+    display:flex;flex-direction:column;
+  }
+  .status-bar{
+    display:flex;justify-content:space-between;
+    padding:14px 22px 6px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;color:var(--ink);
+  }
+  .status-bar .right-icons{display:flex;gap:5px;align-items:center}
+  .status-bar .battery{
+    width:18px;height:9px;
+    border:1px solid var(--ink);border-radius:2px;
+    position:relative;
+  }
+  .status-bar .battery::after{
+    content:'';position:absolute;
+    right:-3px;top:2px;width:2px;height:5px;
+    background:var(--ink);border-radius:0 2px 2px 0;
+  }
+  .status-bar .battery::before{
+    content:'';position:absolute;
+    inset:1px;background:var(--teal);
+    width:75%;border-radius:1px;
+  }
+  
+  /* SCAN SCREEN (The Magic Scanner is Back!) */
+  .scan-app{padding:8px 16px 16px;display:flex;flex-direction:column;height:100%}
+  .app-header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 0 16px;
+  }
+  .app-header .greet{font-size:11px;color:var(--ink-dim)}
+  .app-header .greet strong{color:var(--ink);font-weight:600;display:block;font-size:13px}
+  .app-header .avatar{
+    width:28px;height:28px;border-radius:50%;
+    background:linear-gradient(135deg,var(--teal),var(--amber));
+  }
+  .scan-view{
+    flex:1;
+    background:radial-gradient(circle at center,rgba(0,229,200,.08),transparent 70%),#080C12;
+    border-radius:18px;
+    position:relative;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.05);
+    min-height:280px;
+  }
+  .scan-view .corners::before,
+  .scan-view .corners::after,
+  .scan-view .corner-bl,
+  .scan-view .corner-br{
+    content:'';position:absolute;
+    width:24px;height:24px;
+    border:2px solid var(--teal);
+  }
+  .scan-view .corners::before{top:20px;left:20px;border-right:none;border-bottom:none;border-radius:6px 0 0 0}
+  .scan-view .corners::after{top:20px;right:20px;border-left:none;border-bottom:none;border-radius:0 6px 0 0}
+  .scan-view .corner-bl{bottom:20px;left:20px;border-right:none;border-top:none;border-radius:0 0 0 6px}
+  .scan-view .corner-br{bottom:20px;right:20px;border-left:none;border-top:none;border-radius:0 0 6px 0}
+  .scan-line{
+    position:absolute;left:20px;right:20px;
+    height:2px;
+    background:linear-gradient(90deg,transparent,var(--teal),transparent);
+    box-shadow:0 0 20px var(--teal);
+    top:50%;
+    animation:scan 2.5s ease-in-out infinite;
+  }
+  @keyframes scan{
+    0%,100%{top:30%}
+    50%{top:70%}
+  }
+  .pill-graphic{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:140px;
+  }
+  .pill-graphic svg{width:100%;height:auto}
+  .scan-hint{
+    position:absolute;bottom:24px;
+    left:50%;transform:translateX(-50%);
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;color:var(--teal);
+    letter-spacing:2px;text-align:center;
+    background:rgba(0,229,200,.1);
+    padding:6px 14px;border-radius:20px;
+    border:1px solid rgba(0,229,200,.3);
+    white-space:nowrap;
+  }
+  .med-result{
+    margin-top:14px;
+    background:rgba(0,229,200,.06);
+    border:1px solid rgba(0,229,200,.2);
+    border-radius:14px;
+    padding:14px;
+  }
+  .med-result .res-top{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:8px;
+  }
+  .med-result .verified{
+    display:flex;align-items:center;gap:4px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;color:var(--teal);
+    letter-spacing:1px;
+  }
+  .med-result .verified::before{
+    content:'';width:6px;height:6px;
+    background:var(--teal);border-radius:50%;
+    box-shadow:0 0 6px var(--teal);
+  }
+  .med-result h4{
+    font-family:'Fraunces',serif;
+    font-size:15px;font-weight:600;
+    color:var(--ink);margin-bottom:2px;
+  }
+  .med-result .meta-line{
+    font-size:10px;color:var(--ink-dim);
+    margin-bottom:8px;
+  }
+  .med-result .info-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:8px;
+    padding-top:8px;border-top:1px dashed rgba(255,255,255,.08);
+  }
+  .med-result .info-grid div{font-size:9px;color:var(--ink-dim)}
+  .med-result .info-grid div strong{color:var(--ink);display:block;font-size:11px;margin-top:2px}
+
+  /* ========= SLIDE 7 : GOV DASHBOARD ========= */
+  .gov{background:var(--bg)}
+  .gov-content{
+    display:grid;
+    grid-template-columns:1fr 1.4fr;
+    gap:40px;
+    flex:1;
+  }
+  .gov-left h3{
+    font-family:'Fraunces',serif;
+    font-size:42px;font-weight:300;
+    line-height:1.1;margin-bottom:18px;
+    letter-spacing:-.02em;
+  }
+  .gov-left h3 em{color:var(--teal);font-style:italic}
+  .gov-left p{color:var(--ink-dim);font-size:14px;line-height:1.7;margin-bottom:24px}
+  .gov-features{display:flex;flex-direction:column;gap:14px}
+  .gov-feat{
+    display:flex;gap:14px;
+    padding:14px;
+    background:rgba(255,255,255,.02);
+    border:1px solid var(--line);
+    border-left:2px solid var(--teal);
+  }
+  .gov-feat:nth-child(2){border-left-color:var(--amber)}
+  .gov-feat:nth-child(3){border-left-color:var(--red)}
+  .gov-feat:nth-child(4){border-left-color:var(--teal)}
+  .gov-feat .ico{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--teal);font-size:11px;
+    min-width:30px;
+  }
+  .gov-feat:nth-child(2) .ico{color:var(--amber)}
+  .gov-feat:nth-child(3) .ico{color:var(--red)}
+  .gov-feat .txt h5{font-size:14px;font-weight:600;margin-bottom:3px}
+  .gov-feat .txt p{font-size:12px;color:var(--ink-dim);margin:0;line-height:1.5}
+
+  .dashboard-mock{
+    background:#070B12;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:18px;
+    display:flex;flex-direction:column;
+    gap:14px;
+    box-shadow:0 30px 80px rgba(0,0,0,.4);
+  }
+  .dash-head{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-bottom:12px;border-bottom:1px solid var(--line);
+  }
+  .dash-head .title{
+    font-family:'Fraunces',serif;font-size:16px;font-weight:600;
+    display:flex;align-items:center;gap:8px;
+  }
+  .dash-head .title::before{
+    content:'';width:8px;height:8px;
+    background:var(--teal);border-radius:2px;
+    box-shadow:0 0 8px var(--teal);
+  }
+  .dash-head .live{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;color:var(--teal);
+    display:flex;align-items:center;gap:5px;
+    background:rgba(0,229,200,.1);
+    padding:3px 8px;border-radius:10px;
+  }
+  .dash-head .live .pulse{
+    width:5px;height:5px;background:var(--teal);
+    border-radius:50%;animation:pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:1}
+    50%{opacity:.3}
+  }
+  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .kpi{
+    background:rgba(255,255,255,.02);
+    border:1px solid var(--line);
+    border-radius:8px;padding:10px;
+  }
+  .kpi .lbl{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ink-faint);letter-spacing:1px;margin-bottom:6px;text-transform:uppercase}
+  .kpi .val{font-family:'Fraunces',serif;font-size:22px;font-weight:600;line-height:1}
+  .kpi .val.teal{color:var(--teal)}
+  .kpi .val.amber{color:var(--amber)}
+  .kpi .val.red{color:var(--red)}
+  .kpi .delta{font-size:9px;color:var(--ink-dim);margin-top:4px}
+  .kpi .delta .up{color:var(--teal)}
+  .kpi .delta .down{color:var(--red)}
+  .chart-row{display:grid;grid-template-columns:2fr 1fr;gap:10px}
+  .chart-box{
+    background:rgba(255,255,255,.02);
+    border:1px solid var(--line);
+    border-radius:8px;padding:14px;
+  }
+  .chart-box .ct{font-size:11px;color:var(--ink);font-weight:600;margin-bottom:10px;display:flex;justify-content:space-between}
+  .chart-box .ct span{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ink-dim);font-weight:400}
+  .bars{display:flex;align-items:flex-end;gap:6px;height:100px}
+  .bars .bar{flex:1;background:linear-gradient(180deg,var(--teal),rgba(0,229,200,.2));border-radius:3px 3px 0 0;position:relative}
+  .bars .bar.amber{background:linear-gradient(180deg,var(--amber),rgba(255,182,39,.2))}
+  .bars .bar::after{
+    content:attr(data-v);
+    position:absolute;top:-14px;left:50%;
+    transform:translateX(-50%);
+    font-family:'JetBrains Mono',monospace;
+    font-size:8px;color:var(--ink-dim);
+  }
+  .map-box{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:8px;padding:14px;height:100%;display:flex;flex-direction:column}
+  .map-box .ct{font-size:11px;color:var(--ink);font-weight:600;margin-bottom:10px}
+  .map-viz{
+    flex:1;position:relative;
+    background:
+      radial-gradient(circle at 30% 40%,rgba(0,229,200,.15),transparent 30%),
+      radial-gradient(circle at 70% 60%,rgba(255,71,87,.12),transparent 30%),
+      radial-gradient(circle at 50% 80%,rgba(255,182,39,.1),transparent 30%);
+    border-radius:6px;
+    min-height:100px;
+  }
+  .map-pin{
+    position:absolute;width:8px;height:8px;
+    border-radius:50%;background:var(--teal);
+    box-shadow:0 0 12px var(--teal);
+    animation:pulse 2s infinite;
+  }
+  .map-pin.amber{background:var(--amber);box-shadow:0 0 12px var(--amber)}
+  .map-pin.red{background:var(--red);box-shadow:0 0 12px var(--red)}
+  .alert-stream{display:flex;flex-direction:column;gap:6px}
+  .alert{
+    display:flex;align-items:center;gap:8px;
+    padding:8px 10px;
+    background:rgba(255,255,255,.02);
+    border-left:2px solid var(--teal);
+    border-radius:4px;
+    font-size:10px;
+  }
+  .alert.amber{border-left-color:var(--amber)}
+  .alert.red{border-left-color:var(--red)}
+  .alert .time{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ink-faint)}
+  .alert .txt{color:var(--ink-dim);flex:1}
+  .alert .txt strong{color:var(--ink)}
+
+  /* ========= SLIDE 8 : SUSTAINABILITY ========= */
+  .sustain{background:var(--bg-2)}
+  .sustain-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    flex:1;
+    align-items:center;
+  }
+  .sustain-left h3{
+    font-family:'Fraunces',serif;
+    font-size:48px;font-weight:300;
+    line-height:1.05;margin-bottom:20px;
+    letter-spacing:-.02em;
+  }
+  .sustain-left h3 em{color:var(--teal);font-style:italic}
+  .sustain-left p{color:var(--ink-dim);font-size:15px;line-height:1.7;margin-bottom:24px}
+  .rev-streams{display:flex;flex-direction:column;gap:12px}
+  .rev-item{
+    display:grid;
+    grid-template-columns:60px 1fr auto;
+    gap:16px;align-items:center;
+    padding:14px 16px;
+    background:rgba(255,255,255,.02);
+    border:1px solid var(--line);
+    transition:all .3s;
+  }
+  .rev-item:hover{border-color:var(--teal);background:rgba(0,229,200,.03)}
+  .rev-item .pct{
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px;font-weight:600;
+    color:var(--teal);
+    text-align:center;
+  }
+  .rev-item:nth-child(2) .pct{color:var(--amber)}
+  .rev-item:nth-child(3) .pct{color:var(--red)}
+  .rev-item:nth-child(4) .pct{color:var(--teal)}
+  .rev-item .info h5{font-size:13px;font-weight:600;margin-bottom:2px}
+  .rev-item .info p{font-size:11px;color:var(--ink-dim);margin:0}
+  .rev-item .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;color:var(--ink-dim);
+    background:rgba(255,255,255,.03);
+    padding:4px 8px;border-radius:3px;
+    letter-spacing:1px;
+  }
+
+  .money-vis{
+    position:relative;
+    aspect-ratio:1;
+    max-width:480px;margin:0 auto;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .money-ring{
+    width:100%;height:100%;
+    border-radius:50%;
+    background:conic-gradient(
+      var(--teal) 0deg 144deg,
+      var(--amber) 144deg 252deg,
+      var(--red) 252deg 324deg,
+      var(--teal-deep) 324deg 360deg
+    );
+    mask:radial-gradient(circle,transparent 55%,black 56%);
+    -webkit-mask:radial-gradient(circle,transparent 55%,black 56%);
+    opacity:.9;
+  }
+  .money-center{
+    position:absolute;
+    text-align:center;
+  }
+  .money-center .lbl{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;color:var(--ink-dim);
+    letter-spacing:2px;margin-bottom:8px;
+  }
+  .money-center .big{
+    font-family:'Fraunces',serif;
+    font-size:48px;font-weight:600;
+    line-height:1;color:var(--ink);
+  }
+  .money-center .big em{color:var(--teal);font-style:italic}
+  .money-center .sub{
+    font-size:12px;color:var(--ink-dim);
+    margin-top:6px;
+  }
+
+  /* ========= SLIDE 9 : FEASIBILITY ========= */
+  .feasible{background:var(--bg)}
+  .feas-grid{
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:48px;
+    flex:1;
+  }
+  .feas-left{display:flex;flex-direction:column;gap:24px}
+  .feas-checks{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .check-item{
+    display:flex;gap:12px;align-items:flex-start;
+    padding:14px;background:rgba(255,255,255,.02);
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .check-item .tick{color:var(--teal);font-size:14px;margin-top:2px}
+  .check-item p{font-size:12px;color:var(--ink);line-height:1.4}
+  
+  .timeline-card{
+    background:linear-gradient(180deg,rgba(0,229,200,.05),transparent);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:24px;
+  }
+  .timeline-card h4{
+    font-family:'Fraunces',serif;
+    font-size:20px;font-weight:500;
+    margin-bottom:18px;
+  }
+  .timeline{
+    display:flex;flex-direction:column;gap:0;
+    position:relative;
+  }
+  .timeline::before{
+    content:'';position:absolute;
+    left:8px;top:8px;bottom:8px;
+    width:1px;background:var(--line);
+  }
+  .tl-item{
+    display:flex;gap:16px;
+    padding:10px 0;position:relative;
+  }
+  .tl-item .dot{
+    width:17px;height:17px;
+    border-radius:50%;
+    background:var(--bg);
+    border:2px solid var(--teal);
+    flex-shrink:0;z-index:1;margin-top:2px;
+  }
+  .tl-item:nth-child(2) .dot{border-color:var(--amber)}
+  .tl-item:nth-child(3) .dot{border-color:var(--red);background:var(--red)}
+  .tl-item .tl-body{flex:1}
+  .tl-item .tl-body .phase{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;color:var(--teal);
+    letter-spacing:1px;margin-bottom:2px;
+  }
+  .tl-item:nth-child(2) .phase{color:var(--amber)}
+  .tl-item:nth-child(3) .phase{color:var(--red)}
+  .tl-item .tl-body h5{
+    font-size:14px;font-weight:600;
+    margin-bottom:2px;
+  }
+  .tl-item .tl-body p{
+    font-size:11px;color:var(--ink-dim);
+    line-height:1.5;
+  }
+
+  /* ========= SLIDE 10 : IMPACT ========= */
+  .impact{
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 100%,rgba(0,229,200,.08),transparent),
+      var(--bg);
+  }
+  .impact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+    flex:1;
+  }
+  .impact-left h3{
+    font-family:'Fraunces',serif;
+    font-size:64px;font-weight:300;
+    line-height:1;letter-spacing:-.02em;
+    margin-bottom:20px;
+  }
+  .impact-left h3 em{color:var(--teal);font-style:italic}
+  .impact-left .lead{
+    font-size:18px;color:var(--ink);
+    line-height:1.5;margin-bottom:24px;
+    font-weight:300;
+  }
+  .impact-left .lead strong{color:var(--teal);font-weight:600}
+  
+  .impact-numbers{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    align-content:start;
+  }
+  .imp-cell{
+    background:var(--bg);
+    padding:28px 24px;
+    display:flex;flex-direction:column;
+    gap:8px;position:relative;
+  }
+  .imp-cell .imp-num{
+    font-family:'Fraunces',serif;
+    font-size:32px;font-weight:300;
+    line-height:1;letter-spacing:-.03em;
+  }
+  .imp-cell:nth-child(1) .imp-num{color:var(--teal)}
+  .imp-cell:nth-child(2) .imp-num{color:var(--amber)}
+  .imp-cell:nth-child(3) .imp-num{color:var(--red)}
+  .imp-cell:nth-child(4) .imp-num{color:var(--teal)}
+  .imp-cell:nth-child(5) .imp-num{color:var(--amber)}
+  .imp-cell:nth-child(6) .imp-num{color:var(--teal)}
+  .imp-cell .imp-desc{
+    font-size:12px;color:var(--ink);
+    line-height:1.4;font-weight:500;
+  }
+  
+  .closing{
+    margin-top:48px;
+    padding:32px;
+    border:1px solid var(--line);
+    background:linear-gradient(90deg,rgba(0,229,200,.05),transparent);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .closing .text{
+    font-family:'Fraunces',serif;
+    font-size:24px;font-weight:300;
+    line-height:1.2;max-width:700px;
+  }
+  .closing .text em{color:var(--teal);font-style:italic}
+  .closing .cta{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;color:var(--teal);
+    letter-spacing:2px;
+    display:flex;align-items:center;gap:8px;
+    padding:12px 20px;
+    border:1px solid var(--teal);
+    border-radius:4px;
+  }
+  .closing .cta::after{content:'→'}
+
+  /* responsive-ish */
+  @media (max-width:1100px){
+    .slide{padding:48px 36px}
+    .modules{grid-template-columns:repeat(2,1fr)}
+    .crisis-grid{grid-template-columns:1fr}
+    .stats-row{grid-template-columns:repeat(2,1fr)}
+    .narrative{grid-template-columns:1fr;gap:24px}
+    .how-grid{grid-template-columns:1fr;gap:32px}
+    .gov-content,.sustain-grid,.feas-grid,.impact-grid{grid-template-columns:1fr;gap:32px}
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- =================== SLIDE 1 : COVER =================== -->
+<section class="slide cover">
+  <div class="cover-top">
+    <div class="logo-mark"><span class="dot"></span>MedScan<span style="color:var(--ink-dim);font-weight:400">+</span></div>
+    <div>RAJASTHAN IDEATHON · 2026</div>
+  </div>
+
+  <div class="cover-center">
+    <div class="kicker">Healthcare Innovation Track</div>
+    <h1>Verify what you take.<br>Manage how you take it.<br><em>Recover</em> what you don’t.</h1>
+    <div class="cover-sub">MedScan+ is a smart medicine safety & recovery platform connecting what a patient is prescribed, what they actually take, and what happens to the medicine left over.</div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="meta-block">
+      <div class="label">Track</div>
+      <div class="val">Healthcare Innovation</div>
+    </div>
+    <div class="meta-block">
+      <div class="label">Modules</div>
+      <div class="val">Find · Verify · Manage · Recover</div>
+    </div>
+    <div class="meta-block">
+      <div class="label">Prepared For</div>
+      <div class="val">Rajasthan Ideathon 2026</div>
+    </div>
+    <div class="meta-block">
+      <div class="label">Focus Region</div>
+      <div class="val">Rajasthan (MMNDY Integrated)</div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== SLIDE 2 : PROBLEM =================== -->
+<section class="slide problem">
+  <div class="slide-tag">01 / The Problem</div>
+  <div class="slide-num">02 — 11</div>
+
+  <div class="section-head" style="margin-top:60px">
+    <h2>Medicine mismanagement is<br>a silent, <em>three-part</em> crisis.</h2>
+    <div class="right-note">Three failures, one broken patient journey.</div>
+  </div>
+
+  <div class="crisis-grid">
+    <div class="crisis-card">
+      <div class="bg-num">01</div>
+      <div class="num-prefix">CRISIS — 01</div>
+      <h3>Wrong Medicine Errors</h3>
+      <div class="accent-bar"></div>
+      <p>Prescriptions are unclear or the wrong strip is picked up at the pharmacy — and there is no system to cross-check it before consumption.</p>
+    </div>
+
+    <div class="crisis-card">
+      <div class="bg-num">02</div>
+      <div class="num-prefix">CRISIS — 02</div>
+      <h3>Massive Wastage</h3>
+      <div class="accent-bar"></div>
+      <p>Most households discard unused medicine. It isn’t tracked, returned, or reused safely — ending up in drains and dustbins.</p>
+    </div>
+
+    <div class="crisis-card">
+      <div class="bg-num">03</div>
+      <div class="num-prefix">CRISIS — 03</div>
+      <h3>Unaffordable Access</h3>
+      <div class="accent-bar"></div>
+      <p>Families don't know where the same medicine is available for free (Govt/MMNDY) or at a fraction of the price (Jan Aushadhi) nearby.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== SLIDE 3 : WHY IT MATTERS =================== -->
+<section class="slide why">
+  <div class="slide-tag">02 / Why It Matters</div>
+  <div class="slide-num">03 — 11</div>
+
+  <div class="section-head" style="margin-top:60px">
+    <h2>The numbers behind<br>the <em>crisis</em>.</h2>
+    <div class="right-note">Every figure is formally sourced. Rajasthan-specific tracking does not exist today — MedScan+ closes that visibility gap.</div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-cell">
+      <div class="figure red">3M+</div>
+      <div class="stat-desc">deaths per year worldwide linked to medication errors</div>
+      <div class="source">SOURCE — WHO, World Patient Safety Day</div>
+    </div>
+    <div class="stat-cell">
+      <div class="figure amber">5.2M</div>
+      <div class="stat-desc">medical injury cases estimated annually in India</div>
+      <div class="source">SOURCE — Harvard University Study</div>
+    </div>
+    <div class="stat-cell">
+      <div class="figure red">70%</div>
+      <div class="stat-desc">of purchased medicine goes unused or thrown away in 3 of 4 Indian households</div>
+      <div class="source">SOURCE — LocalCircles National Survey</div>
+    </div>
+    <div class="stat-cell">
+      <div class="figure white">38M</div>
+      <div class="stat-desc">Indians pushed into poverty by medicine spending alone (of 55M total)</div>
+      <div class="source">SOURCE — PHFI / NSSO-based Study</div>
+    </div>
+    <div class="stat-cell">
+      <div class="figure amber">82%</div>
+      <div class="stat-desc">of surveyed households simply threw unused drugs in the dustbin</div>
+      <div class="source">SOURCE — Bhubaneswar Disposal-Practice Study</div>
+    </div>
+    <div class="stat-cell">
+      <div class="figure teal">₹38K Cr</div>
+      <div class="stat-desc">saved by citizens via Jan Aushadhi in 11 years — proof affordable-access models work</div>
+      <div class="source">SOURCE — PMBJP, Govt of India (June 2025)</div>
+    </div>
+  </div>
+
+  <div class="narrative">
+    <div class="lead">State-level (Rajasthan-specific) tracking of these numbers <em>does not exist today</em> — that visibility gap is itself part of what MedScan+ is built to close.</div>
+  </div>
+</section>
+
+<!-- =================== SLIDE 4 : SOLUTION =================== -->
+<section class="slide solution">
+  <div class="slide-tag">03 / The Solution</div>
+  <div class="slide-num">04 — 11</div>
+
+  <div class="section-head" style="margin-top:60px">
+    <h2>One platform,<br><em>four connected</em> modules.</h2>
+    <div class="right-note">MedScan+ follows a medicine’s full journey — from finding it, to safely using it, to responsibly recovering what’s left.</div>
+  </div>
+
+  <div class="modules">
+    <div class="module-card">
+      <div class="mod-num">M—01</div>
+      <div class="module-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E5C8" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div class="mod-sub">Find</div>
+      <h3>Locate Nearby</h3>
+      <p>Search a medicine and see the nearest place it’s available free (Govt/MMNDY) or cheapest (Jan Aushadhi, pharmacy).</p>
+      <ul class="feat-list">
+        <li>Free → Cheapest → Nearest</li>
+        <li>Live map directions</li>
+      </ul>
+    </div>
+
+    <div class="module-card">
+      <div class="mod-num">M—02</div>
+      <div class="module-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFB627" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="m7 12 2 2 8-8"/></svg>
+      </div>
+      <div class="mod-sub">Verify</div>
+      <h3>Catch Mismatches</h3>
+      <p>Scan prescription + medicine packet. App flags any mismatch in name, strength, or dosage before you take it.</p>
+      <ul class="feat-list">
+        <li>OCR extraction</li>
+        <li>Instant mismatch alert</li>
+      </ul>
+    </div>
+
+    <div class="module-card">
+      <div class="mod-num">M—03</div>
+      <div class="module-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF4757" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      </div>
+      <div class="mod-sub">Manage</div>
+      <h3>Auto-Schedule</h3>
+      <p>Auto-built schedule from the verified prescription — reminders, taken/missed tracking, and expiry alerts.</p>
+      <ul class="feat-list">
+        <li>Zero manual entry</li>
+        <li>Family mode included</li>
+      </ul>
+    </div>
+
+    <div class="module-card">
+      <div class="mod-num">M—04</div>
+      <div class="module-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E5C8" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="m9 14 2 2 4-4"/></svg>
+      </div>
+      <div class="mod-sub">Recover</div>
+      <h3>Safe Returns</h3>
+      <p>Unused, sealed medicine routed to an authorized collection point — verified reuse or safe scientific disposal.</p>
+      <ul class="feat-list">
+        <li>Eligibility check</li>
+        <li>QR verified drop-off</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- =================== SLIDE 5 : HOW IT WORKS — PART 1 =================== -->
+<section class="slide how">
+  <div class="slide-tag">04 / How It Works — Part 1</div>
+  <div class="slide-num">05 — 11</div>
+
+  <div class="section-head" style="margin-top:60px">
+    <h2>Find the medicine,<br>then <em>verify</em> it’s the right one.</h2>
+    <div class="right-note">From locating the cheapest source to catching a dangerous mismatch before the dose is taken.</div>
+  </div>
+
+  <div class="how-grid">
+    <!-- Left: FIND Steps -->
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Search by medicine name</h4>
+          <p>Patient enters the prescribed salt/brand (e.g., "Metformin 500mg") into the app.</p>
+          <span class="tech-tag">SEARCH · INPUT</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>App checks 3 sources</h4>
+          <p>Checks Govt/PHC free stock (MMNDY), Jan Aushadhi Kendra, and nearby private pharmacies.</p>
+          <span class="tech-tag">API · 3 SOURCES</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Results ranked by cost</h4>
+          <p>Ranked: Free → Cheapest → Nearest, with live map directions to the location.</p>
+          <span class="tech-tag">GEO · MAP</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Scan medicine packet</h4>
+          <p>Patient scans the strip/box given by the pharmacist to read its printed details.</p>
+          <span class="tech-tag">CV · OCR · ON-DEVICE</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Middle: Scanner UI (The Magic Scanner is Back!) -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar">
+            <span>9:41</span>
+            <div class="right-icons">
+              <span style="font-size:8px">5G</span>
+              <div class="battery"></div>
+            </div>
+          </div>
+          <div class="scan-app">
+            <div class="app-header">
+              <div class="greet">Welcome back<strong>Scan a medicine</strong></div>
+              <div class="avatar"></div>
+            </div>
+            <div class="scan-view">
+              <div class="corners"></div>
+              <div class="corner-bl"></div>
+              <div class="corner-br"></div>
+              <div class="scan-line"></div>
+              <div class="pill-graphic">
+                <svg viewBox="0 0 200 80" fill="none">
+                  <rect x="20" y="20" width="160" height="40" rx="20" fill="#1a2030" stroke="#00E5C8" stroke-width="1.5"/>
+                  <rect x="20" y="20" width="80" height="40" rx="20" fill="rgba(0,229,200,.15)"/>
+                  <text x="100" y="44" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#00E5C8">CRO-2401</text>
+                  <text x="100" y="54" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="#8A93A6">MFG: 03/25 · EXP: 03/27</text>
+                </svg>
+              </div>
+              <div class="scan-hint">SCANNING…</div>
+            </div>
+            <div class="med-result">
+              <div class="res-top">
+                <div class="verified">VERIFIED AUTHENTIC</div>
+                <div style="font-family:'JetBrains Mono';font-size:9px;color:var(--ink-dim)">0.84s</div>
+              </div>
+              <h4>Crocin Advance 500mg</h4>
+              <div class="meta-line">Paracetamol · GlaxoSmithKline · Strip of 15</div>
+              <div class="info-grid">
+                <div>BATCH<strong>AX2291F</strong></div>
+                <div>MFG<strong>Mar 2025</strong></div>
+                <div>EXP<strong>Mar 2027</strong></div>
+                <div>SOURCE<strong>Verified ✓</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-faint);letter-spacing:2px;text-align:center">MODULE 02 · VERIFY UI</div>
+    </div>
+
+    <!-- Right: VERIFY Steps -->
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Scan prescription</h4>
+          <p>Patient uploads or takes a camera photo of the physical prescription note.</p>
+          <span class="tech-tag">OCR · IMAGE PROCESSING</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Extract medicine details</h4>
+          <p>OCR reads the medicine name, strength, and dosage duration automatically.</p>
+          <span class="tech-tag">NLP · DATA EXTRACTION</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Compare packet vs Rx</h4>
+          <p>The system compares the extracted prescription data with the scanned medicine packet.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>App flags mismatch</h4>
+          <p>If details match, it shows "Verified". If wrong, it alerts: "Mismatch — confirm with pharmacist."</p>
+          <span class="tech-tag">SAFETY CHECK · INSTANT ALERT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== SLIDE 6 : HOW IT WORKS — PART 2 =================== -->
+<section class="slide how">
+  <div class="slide-tag">05 / How It Works — Part 2</div>
+  <div class="slide-num">06 — 11</div>
+
+  <div class="section-head" style="margin-top:60px">
+    <h2>Stay on schedule,<br>then close the loop <em>responsibly</em>.</h2>
+    <div class="right-note">The dose you take. The dose you don't. The strip you almost throw away.</div>
+  </div>
+
+  <div class="how-grid">
+    <!-- Left: MANAGE Steps -->
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Daily Reminders</h4>
+          <p>Notification fires at the exact dose time set from the verified prescription.</p>
+          <span class="tech-tag">PUSH · NOTIFICATION</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Taken / Missed Tracking</h4>
+          <p>One-tap logging builds an adherence history over time for doctors to review.</p>
+          <span class="tech-tag">LOG · ADHERENCE</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Expiry & Refill Alerts</h4>
+          <p>Warns before stocked medicine expires unused, and notifies when stock is about to run out.</p>
+          <span class="tech-tag">PREDICTIVE · ALERT</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Family Mode</h4>
+          <p>One account tracks medicines for elderly parents and children simultaneously.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Middle: MANAGE UI -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar">
+            <span>9:41</span>
+            <div class="right-icons"><span style="font-size:8px">5G</span><div class="battery"></div></div>
+          </div>
+          <div class="scan-app">
+            <div class="app-header">
+              <div class="greet">Today is Tuesday<strong>Your Schedule</strong></div>
+              <div class="avatar"></div>
+            </div>
+            
+            <div style="background:linear-gradient(135deg,rgba(0,229,200,.12),rgba(0,229,200,.04));border:1px solid rgba(0,229,200,.2);border-radius:14px;padding:14px;margin-bottom:12px;">
+              <div style="font-family:'JetBrains Mono';font-size:9px;color:var(--teal);letter-spacing:2px;margin-bottom:4px">NEXT DOSE IN 38 MIN</div>
+              <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:var(--ink);line-height:1">2:00 <span style="font-size:14px;color:var(--ink-dim)">PM</span></div>
+              <div style="font-size:11px;color:var(--ink-dim);margin-top:4px"><strong style="color:var(--ink)">Metformin 500mg</strong> · 1 tab</div>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);">
+              <div style="font-family:'JetBrains Mono';font-size:9px;color:var(--ink);background:rgba(255,255,255,.04);padding:4px 6px;border-radius:4px;">9:00</div>
+              <div style="flex:1"><div style="font-size:11px;color:var(--ink-faint);text-decoration:line-through;font-weight:500">Crocin 500mg</div></div>
+              <div style="width:18px;height:18px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:10px;color:#0A0E14">✓</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);">
+              <div style="font-family:'JetBrains Mono';font-size:9px;color:var(--ink);background:rgba(255,255,255,.04);padding:4px 6px;border-radius:4px;">2:00</div>
+              <div style="flex:1"><div style="font-size:11px;color:var(--ink);font-weight:500">Metformin 500mg</div></div>
+              <div style="width:18px;height:18px;border-radius:50%;border:1px solid var(--line);"></div>
+            </div>
+
+            <div style="background:rgba(255,182,39,.08);border:1px solid rgba(255,182,39,.2);border-radius:12px;padding:10px;margin-top:10px;">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+                <div style="width:6px;height:6px;background:var(--amber);border-radius:50%;box-shadow:0 0 6px var(--amber)"></div>
+                <span style="font-family:'JetBrains Mono';font-size:9px;color:var(--amber);letter-spacing:1px">EXPIRY ALERT</span>
+              </div>
+              <div style="font-size:11px;color:var(--ink);font-weight:500">Azithromycin expires in 12 days</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-faint);letter-spacing:2px;text-align:center">MODULE 03 · MANAGE UI</div>
+    </div>
+
+    <!-- Right: RECOVER Steps -->
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Eligibility check</h4>
+          <p>App checks if the medicine is sealed and has 3-6 months of shelf life left.</p>
+          <span class="tech-tag">CHECK · RULES</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Source-based routing</h4>
+          <p>Private medicine goes to authorized centre; Govt hospital medicine goes back to govt facility; Jan Aushadhi (pending approval).</p>
+          <span class="tech-tag">ROUTING · LOGIC</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Drop-off & QR verification</h4>
+          <p>Pharmacist scans & verifies on drop-off (QR) — creating a digital audit record.</p>
+          <span class="tech-tag">QR · AUDIT</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Verified reuse or safe disposal</h4>
+          <p>Eligible medicine goes for verified reuse/donation. Not eligible goes for safe scientific disposal.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== SLIDE 7 : GOVERNMENT =================== -->
+<section class="slide gov">
+  <div class="slide-tag">06 / For Government</div>
+  <div class="slide-num">07 — 11</div>
+
+  <div class="section-head" style="margin-top:60px">
+    <h2>A live dashboard<br>nobody <em>has today</em>.</h2>
+    <div class="right-note">Real-time, block-level view for Health Department / PHC officials — built entirely from data the app already collects.</div>
+  </div>
+
+  <div class="gov-content">
+    <div class="gov-left">
+      <h3>Timing advantage: Rajasthan already runs <em>MMNDY</em> — spending crores on free medicines with no digital tracking layer today. MedScan+ becomes that missing layer.</h3>
+
+      <div class="gov-features">
+        <div class="gov-feat">
+          <div class="ico">01</div>
+          <div class="txt">
+            <h5>Medication Safety</h5>
+            <p>Mismatch alerts by area — spot pharmacy or prescription patterns causing errors.</p>
+          </div>
+        </div>
+        <div class="gov-feat">
+          <div class="ico">02</div>
+          <div class="txt">
+            <h5>Recovery Volume</h5>
+            <p>How much medicine is collected, where, and its eligible-reuse vs disposal split.</p>
+          </div>
+        </div>
+        <div class="gov-feat">
+          <div class="ico">03</div>
+          <div class="txt">
+            <h5>Wastage Hotspots</h5>
+            <p>Block-wise wastage pattern to target awareness drives where they’re needed most.</p>
+          </div>
+        </div>
+        <div class="gov-feat">
+          <div class="ico">04</div>
+          <div class="txt">
+            <h5>Policy-Ready Data</h5>
+            <p>Feeds directly into MMNDY planning and any future state health data authority.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-mock">
+      <div class="dash-head">
+        <div class="title">MedScan+ · State Health Console</div>
+        <div class="live"><div class="pulse"></div>LIVE · RAJASTHAN</div>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi">
+          <div class="lbl">Mismatch Alerts</div>
+          <div class="val red">42</div>
+          <div class="delta"><span class="up">▲ 8 today</span></div>
+        </div>
+        <div class="kpi">
+          <div class="lbl">Recovered (kg)</div>
+          <div class="val teal">128</div>
+          <div class="delta"><span class="up">This week</span></div>
+        </div>
+        <div class="kpi">
+          <div class="lbl">Wastage Blocks</div>
+          <div class="val amber">14</div>
+          <div class="delta"><span class="down">Flagged red</span></div>
+        </div>
+        <div class="kpi">
+          <div class="lbl">MMNDY Stockouts</div>
+          <div class="val" style="color:var(--ink)">3</div>
+          <div class="delta"><span class="up">Predicted</span></div>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-box">
+          <div class="ct">Weekly mismatch alerts <span>last 7 days</span></div>
+          <div class="bars">
+            <div class="bar" data-v="42" style="height:30%"></div>
+            <div class="bar" data-v="58" style="height:42%"></div>
+            <div class="bar amber" data-v="91" style="height:62%"></div>
+            <div class="bar" data-v="74" style="height:52%"></div>
+            <div class="bar" data-v="63" style="height:45%"></div>
+            <div class="bar amber" data-v="112" style="height:78%"></div>
+            <div class="bar amber" data-v="127" style="height:88%"></div>
+          </div>
+        </div>
+        <div class="map-box">
+          <div class="ct">Wastage Hotspots · Jaipur</div>
+          <div class="map-viz">
+            <div class="map-pin red" style="top:20%;left:25%"></div>
+            <div class="map-pin red" style="top:45%;left:60%"></div>
+            <div class="map-pin amber" style="top:70%;left:30%"></div>
+            <div class="map-pin" style="top:35%;left:80%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert-stream">
+        <div class="alert red">
+          <span class="time">14:32</span>
+          <span class="txt"><strong>Sanganer</strong> · 4 prescription mismatches detected at single pharmacy</span>
+        </div>
+        <div class="alert amber">
+          <span class="time">13:08</span>
+          <span class="txt"><strong>Bassi</strong> · High wastage pattern flagged (Insulin)</span>
+        </div>
+        <div class="alert">
+          <span class="time">11:45</span>
+          <span class="txt"><strong>Govindgarh</strong> · 6.4kg expired medicine safely collected</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== SLIDE 8 : SUSTAINABILITY =================== -->
+<section class="slide sustain">
+  <div class="slide-tag">07 / Sustainability</div>
+  <div class="slide-num">08 — 11</div>
+
+  <div class="section-head" style="margin-top:60px">
+    <h2>Built to be self-sustaining,<br>not <em>donation-dependent</em>.</h2>
+    <div class="right-note">Four revenue lines ensuring long-term operational independence.</div>
+  </div>
+
+  <div class="sustain-grid">
+    <div class="sustain-left">
+      <h3>Four revenue lines, <em>one platform</em>.</h3>
+      <p>MedScan+ earns from the actors who derive measurable economic value from the data and infrastructure it provides — government, pharmacies, insurers, and premium users.</p>
+
+      <div class="rev-streams">
+        <div class="rev-item">
+          <div class="pct">B2G</div>
+          <div class="info">
+            <h5>Govt / PHC / Jan Aushadhi tie-up</h5>
+            <p>Data partnership + recovery-network contract with state health departments.</p>
+          </div>
+          <div class="tag">SAAS</div>
+        </div>
+        <div class="rev-item">
+          <div class="pct">B2B</div>
+          <div class="info">
+            <h5>Pharmacy chains</h5>
+            <p>Mismatch-check API licensing + sponsored listings in the Find module.</p>
+          </div>
+          <div class="tag">API</div>
+        </div>
+        <div class="rev-item">
+          <div class="pct">B2B</div>
+          <div class="info">
+            <h5>Insurance companies</h5>
+            <p>Medication-adherence data licensing for patient risk assessment.</p>
+          </div>
+          <div class="tag">DATA</div>
+        </div>
+        <div class="rev-item">
+          <div class="pct">B2C</div>
+          <div class="info">
+            <h5>Patients & families</h5>
+            <p>Free core app; premium multi-family tracking subscription for caregivers.</p>
+          </div>
+          <div class="tag">SUB</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="money-vis">
+      <div class="money-ring"></div>
+      <div class="money-center">
+        <div class="lbl">REVENUE SPLIT</div>
+        <div class="big">100<em>%</em></div>
+        <div class="sub">Self-Sustaining Model</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== SLIDE 9 : FEASIBILITY =================== -->
+<section class="slide feasible">
+  <div class="slide-tag">08 / Feasibility</div>
+  <div class="slide-num">09 — 11</div>
+
+  <div class="section-head" style="margin-top:60px">
+    <h2>Software-first —<br><em>low cost</em>, fast to pilot.</h2>
+    <div class="right-note">No new hardware. No new buildings. Just software, APIs, and existing infrastructure.</div>
+  </div>
+
+  <div class="feas-grid">
+    <div class="feas-left">
+      <div style="font-family:'JetBrains Mono';font-size:11px;color:var(--ink-faint);letter-spacing:2px;margin-bottom:8px">WHY THIS IS REALISTIC TO BUILD</div>
+      <div class="feas-checks">
+        <div class="check-item">
+          <div class="tick">✓</div>
+          <p>No hardware needed — pure software/app, unlike sensor-based ideas.</p>
+        </div>
+        <div class="check-item">
+          <div class="tick">✓</div>
+          <p>Jan Aushadhi’s 2,047-medicine list is already public data to integrate.</p>
+        </div>
+        <div class="check-item">
+          <div class="tick">✓</div>
+          <p>MMNDY (Rajasthan) provides the free-medicine list via a data partnership.</p>
+        </div>
+        <div class="check-item">
+          <div class="tick">✓</div>
+          <p>OCR (prescription/packet scan) uses off-the-shelf, proven technology.</p>
+        </div>
+        <div class="check-item">
+          <div class="tick">✓</div>
+          <p>PHC/Kendra infrastructure already exists — no new buildings required.</p>
+        </div>
+        <div class="check-item">
+          <div class="tick">✓</div>
+          <p>Low cloud costs — scalable to millions of users seamlessly.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-card">
+      <h4>Phased Rollout</h4>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="dot"></div>
+          <div class="tl-body">
+            <div class="phase">PHASE 01 · 6 MONTHS</div>
+            <h5>Pilot Launch</h5>
+            <p>2–3 PHCs in one block. Testing core Find & Verify flows with real patients.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="dot"></div>
+          <div class="tl-body">
+            <div class="phase">PHASE 02 · 1 YEAR</div>
+            <h5>Expand</h5>
+            <p>District-wide rollout with Jan Aushadhi tie-in and full Recover module live.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="dot"></div>
+          <div class="tl-body">
+            <div class="phase">PHASE 03 · 2 YEARS</div>
+            <h5>Scale State-Wide</h5>
+            <p>Full state-wide MMNDY integration. MedScan+ becomes Rajasthan's default public health tracking layer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== SLIDE 10 : IMPACT =================== -->
+<section class="slide impact">
+  <div class="slide-tag">09 / Impact</div>
+  <div class="slide-num">10 — 11</div>
+
+  <div class="section-head" style="margin-top:60px">
+    <h2>What changes if<br>MedScan+ <em>is built</em>.</h2>
+    <div class="right-note">Measurable, audited impact across the three failure points of the medicine loop.</div>
+  </div>
+
+  <div class="impact-grid">
+    <div class="impact-left">
+      <h3>Verify. Manage. <em>Recover.</em></h3>
+      <div class="lead">MedScan+ is not just an app — it is the missing digital layer for Rajasthan's public health system. By connecting the prescription, the patient, and the leftover medicine, we create a closed loop of safety, affordability, and environmental responsibility.</div>
+      <div style="background:rgba(0,229,200,.05);border-left:2px solid var(--teal);padding:16px;margin-top:16px">
+        <div style="font-family:'JetBrains Mono';font-size:10px;color:var(--teal);letter-spacing:2px;margin-bottom:8px">CORE OUTCOME</div>
+        <div style="font-family:'Fraunces',serif;font-size:18px;line-height:1.2;font-weight:500">"One strip, tracked from prescription to safe recovery — protecting patients, saving money, and healing the ecosystem."</div>
+      </div>
+    </div>
+
+    <div class="impact-numbers">
+      <div class="imp-cell">
+        <div class="imp-num">0 Errors</div>
+        <div class="imp-desc">Fewer preventable harms from medication mismatches, caught before the dose is taken.</div>
+      </div>
+      <div class="imp-cell">
+        <div class="imp-num">Less Waste</div>
+        <div class="imp-desc">Sealed, unexpired stock is recovered instead of binned, reducing environmental hazard.</div>
+      </div>
+      <div class="imp-cell">
+        <div class="imp-num">₹ Saved</div>
+        <div class="imp-desc">Lower household cost — families routed to free/cheapest legitimate sources first.</div>
+      </div>
+      <div class="imp-cell">
+        <div class="imp-num">SHG Jobs</div>
+        <div class="imp-desc">New income for local women who run and maintain collection-point verification.</div>
+      </div>
+      <div class="imp-cell">
+        <div class="imp-num">Live Data</div>
+        <div class="imp-desc">First-ever block-level visibility for the Health Department and MMNDY planning.</div>
+      </div>
+      <div class="imp-cell">
+        <div class="imp-num">Safe Disposal</div>
+        <div class="imp-desc">Environmental hazard from dumped medicine in soil and water drops sharply.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="closing">
+    <div class="text">India's medicine loop is broken in <em>three places</em>.<br>MedScan+ closes all three — on one phone.</div>
+    <div class="cta">RAJASTHAN IDEATHON 2026</div>
+  </div>
+</section>
+
+<!-- =================== SLIDE 11 : CLOSING =================== -->
+<section class="slide cover" style="background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(0,229,200,.1),transparent),var(--bg)">
+  <div class="cover-top">
+    <div class="logo-mark"><span class="dot"></span>MedScan<span style="color:var(--ink-dim);font-weight:400">+</span></div>
+    <div>END · 11 / 11</div>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:24px">
+    <div class="kicker" style="justify-content:center">Thank you</div>
+    <h1 style="font-size:clamp(48px,7vw,110px)">One strip.<br><em>One scan.</em><br>One safe loop.</h1>
+    <div style="color:var(--ink-dim);max-width:600px;font-size:16px;line-height:1.7">For conversations on pilot partnerships, regulator engagement, or seed investment — we are ready to talk.</div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="meta-block">
+      <div class="label">Founder</div>
+      <div class="val">MedScan+ Team</div>
+    </div>
+    <div class="meta-block">
+      <div class="label">Contact</div>
+      <div class="val">hello@medscanplus.in</div>
+    </div>
+    <div class="meta-block">
+      <div class="label">Pilot Ready</div>
+      <div class="val">Rajasthan · Q2 2025</div>
+    </div>
+    <div class="meta-block">
+      <div class="label">Document</div>
+      <div class="val">Pitch Deck v1.0</div>
+    </div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
