@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MedScan+ — Pitch Deck & Presentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,400&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E14;
+    --bg-2:#0E1420;
+    --ink:#F2F4F7;
+    --ink-dim:#8A93A6;
+    --ink-faint:#4A5266;
+    --teal:#00E5C8;
+    --teal-deep:#0FB59B;
+    --amber:#FFB627;
+    --red:#FF4757;
+    --line:rgba(255,255,255,.08);
+    --card:#11161F;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Manrope',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  
+  /* NAVBAR */
+  nav{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:24px 60px;border-bottom:1px solid var(--line);
+    background:rgba(10,14,20,.8);backdrop-filter:blur(12px);
+    position:sticky;top:0;z-index:100;
+  }
+  .logo-mark{
+    display:flex;align-items:center;gap:10px;text-decoration:none;
+    font-family:'Fraunces',serif;font-weight:800;color:var(--ink);font-size:18px;
+  }
+  .logo-mark .dot{
+    width:14px;height:14px;border-radius:4px;
+    background:linear-gradient(135deg,var(--teal),var(--teal-deep));
+    box-shadow:0 0 20px rgba(0,229,200,.6);position:relative;
+  }
+  .logo-mark .dot::after{
+    content:'+';position:absolute;inset:0;display:flex;
+    align-items:center;justify-content:center;color:#0A0E14;font-weight:900;font-size:11px;
+  }
+  .nav-links{display:flex;gap:32px;align-items:center}
+  .nav-links a{
+    font-family:'JetBrains Mono';font-size:11px;color:var(--ink-dim);
+    text-decoration:none;letter-spacing:1px;transition:color .3s;
+  }
+  .nav-links a:hover{color:var(--teal)}
+  .nav-cta{
+    background:var(--teal);color:#0A0E14 !important;
+    padding:8px 16px;border-radius:6px;font-weight:700;
+  }
+
+  /* HERO SECTION */
+  .hero{
+    text-align:center;
+    padding:80px 40px 40px;
+    max-width:900px;margin:0 auto;
+  }
+  .kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;letter-spacing:4px;
+    color:var(--teal);text-transform:uppercase;
+    margin-bottom:24px;
+    display:inline-flex;align-items:center;gap:14px;
+  }
+  .kicker::before, .kicker::after{content:'';width:40px;height:1px;background:var(--teal)}
+  
+  .hero h1{
+    font-family:'Fraunces',serif;
+    font-weight:300;
+    font-size:clamp(48px,6vw,80px);
+    line-height:1;letter-spacing:-.03em;
+    margin-bottom:24px;
+  }
+  .hero h1 em{font-style:italic;color:var(--teal);font-weight:400}
+  .hero p{
+    color:var(--ink-dim);font-size:18px;
+    max-width:640px;margin:0 auto;line-height:1.6;
+  }
+
+  /* ACTION BUTTONS */
+  .actions{
+    display:flex;justify-content:center;gap:16px;
+    margin-top:40px;flex-wrap:wrap;
+  }
+  .btn-primary{
+    background:var(--teal);color:#0A0E14;
+    padding:16px 32px;border-radius:8px;
+    text-decoration:none;font-weight:700;font-size:15px;
+    display:flex;align-items:center;gap:10px;
+    transition:all .3s;
+    box-shadow:0 0 30px rgba(0,229,200,.3);
+  }
+  .btn-primary:hover{background:#33FFE0;transform:translateY(-2px);box-shadow:0 4px 40px rgba(0,229,200,.5)}
+  .btn-secondary{
+    background:transparent;color:var(--ink);
+    padding:16px 32px;border-radius:8px;
+    text-decoration:none;font-weight:600;font-size:15px;
+    border:1px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+    transition:all .3s;
+  }
+  .btn-secondary:hover{border-color:var(--teal);color:var(--teal)}
+
+  /* PDF VIEWER CONTAINER */
+  .viewer-section{
+    padding:60px 80px 100px;
+    max-width:1280px;margin:0 auto;
+    width:100%;
+  }
+  .viewer-header{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:20px;
+    padding-bottom:20px;border-bottom:1px solid var(--line);
+  }
+  .viewer-header h3{
+    font-family:'Fraunces',serif;font-size:24px;font-weight:500;
+    display:flex;align-items:center;gap:12px;
+  }
+  .viewer-header h3::before{
+    content:'';width:8px;height:8px;background:var(--teal);
+    border-radius:2px;box-shadow:0 0 12px var(--teal);
+  }
+  .viewer-header .file-info{
+    font-family:'JetBrains Mono';font-size:11px;color:var(--ink-dim);
+  }
+  
+  .viewer-wrapper{
+    background:var(--bg-2);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,.4);
+    position:relative;
+  }
+  .viewer-wrapper::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,var(--teal),var(--amber),var(--red));
+    z-index:10;
+  }
+  
+  /* Responsive PDF Iframe */
+  .pdf-iframe{
+    width:100%;height:75vh; /* 75% of screen height */
+    border:none;
+    background:#1a1a1a;
+  }
+  
+  /* Download Note */
+  .download-note{
+    margin-top:24px;padding:16px 20px;
+    background:rgba(0,229,200,.05);
+    border:1px solid rgba(0,229,200,.2);
+    border-radius:8px;
+    font-size:13px;color:var(--ink-dim);
+    display:flex;align-items:center;gap:12px;
+  }
+  .download-note svg{width:18px;height:18px;color:var(--teal);flex-shrink:0}
+
+  /* FOOTER */
+  footer{
+    padding:40px 60px;
+    border-top:1px solid var(--line);
+    text-align:center;
+  }
+  footer p{
+    font-family:'JetBrains Mono';font-size:11px;
+    color:var(--ink-faint);letter-spacing:1px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo-mark"><span class="dot"></span>MedScan<span style="color:var(--ink-dim);font-weight:400">+</span></a>
+  <div class="nav-links">
+    <a href="index.html">← Back to Home</a>
+    <a href="#deck" class="nav-cta">View Deck</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="kicker">Investor & Judge Pitch Deck</div>
+  <h1>The <em>MedScan+</em> Story.</h1>
+  <p>Explore our complete vision for Smart Medicine Safety & Recovery. View the presentation directly below, or download the PDF to review it offline.</p>
+  
+  <div class="actions">
+    <a href="MedScan_Plus_Presentation.pdf" download class="btn-primary">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download PDF
+    </a>
+    <a href="MedScan_Plus_Presentation.pdf" target="_blank" class="btn-secondary">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Open in New Tab
+    </a>
+  </div>
+</section>
+
+<section class="viewer-section" id="deck">
+  <div class="viewer-header">
+    <h3>MedScan+ Presentation Deck</h3>
+    <div class="file-info">PDF · 10 SLIDES · ~2.4MB</div>
+  </div>
+  
+  <div class="viewer-wrapper">
+    <!-- Yahan apne PDF ka exact naam likho. Agar kisi folder mein hai toh folder_name/file.pdf likho -->
+    <iframe src="MedScan_Plus_Presentation.pdf#toolbar=1&navpanes=0&scrollbar=1" class="pdf-iframe" title="MedScan+ Pitch Deck"></iframe>
+  </div>
+
+  <div class="download-note">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    <span><strong>Note:</strong> Agar PDF yahan blank ya load nahi ho raha, toh please "Download PDF" par click karke file download karke dekhein. GitHub Pages kabhi-kabhi browser viewer mein PDF restrict karta hai.</span>
+  </div>
+</section>
+
+<footer>
+  <p>MEDSCAN+ · HEALTHCARE INNOVATION · RAJASTHAN IDEATHON 2026</p>
+</footer>
+
+</body>
+</html>
